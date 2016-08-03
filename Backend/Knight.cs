@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Backend
 {
-    public class Class1
+    public class Knight : ChessPiece
     {
     }
 }
