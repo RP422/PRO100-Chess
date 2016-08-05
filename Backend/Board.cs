@@ -65,13 +65,73 @@ namespace Backend
         public int[,] GetValidMoves(int x, int y)
         {
             // Returns an array with the legal moves for the piece at (x, y)
+
+            if(squares[x ,y] == null)
+            {
+                // Define a PieceNotFoundExeption and throw it here
+            }
+
+            String pieceType = squares[x, y].GetType().ToString();
+
+            switch(pieceType.ToString())
+            {
+                case "Backend.Pawn":
+                    return GetValidPawnMoves(x, y);
+                case "Backend.Rook":
+                    return GetValidRookMoves(x, y);
+                case "Backend.Knight":
+                    return GetValidKnightMoves(x, y);
+                case "Backend.Bishop":
+                    return GetValidBishopMoves(x, y);
+                case "Backend.Queen":
+                    return GetValidQueenMoves(x, y);
+                case "Backend.King":
+                    return GetValidKingMoves(x, y);
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        private int[,] GetValidPawnMoves(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+        private int[,] GetValidRookMoves(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+        private int[,] GetValidKnightMoves(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+        private int[,] GetValidBishopMoves(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+        private int[,] GetValidQueenMoves(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+        private int[,] GetValidKingMoves(int x, int y)
+        {
             throw new NotImplementedException();
         }
 
-        private int[,] ExpandAndAddCoordinates(int[,] array, int x, int y)
+        private int[,] ExpandAndAddCoordinates(int[,] array, int insertX, int insertY)
         {
             // Expands an array's size by one and adds (x, y) to the list
-            throw new NotImplementedException();
+            int[,] temp = new int[array.GetLength(0) + 1, 2];
+
+            for(int x = 0; x < array.GetLength(0); x++)
+            {
+                temp[x, 0] = array[x, 0];
+                temp[x, 1] = array[x, 1];
+            }
+
+            temp[array.GetLength(0), 0] = insertX;
+            temp[array.GetLength(0), 1] = insertY;
+
+            return temp;
         }
     }
 }
