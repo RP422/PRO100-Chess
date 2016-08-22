@@ -40,10 +40,52 @@ namespace Backend
             squares[3, 7] = new Queen(TeamColor.WHITE);
             squares[4, 7] = new King(TeamColor.WHITE);
         }
+        public Board(Board copy)
+        {
+            // Copy constructor
+            // For use during check and checkmate methods
+            squares = new ChessPiece[8, 8];
+            String temp;
+
+            for(int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+                    if(copy.squares[x, y] != null)
+                    {
+                        temp = copy.squares[x, y].GetType().ToString();
+
+                        switch(temp)
+                        {
+                            case "Backend.Pawn":
+                                squares[x,y] = new Pawn(copy.squares[x,y].Color);
+                                break;
+                            case "Backend.Rook":
+                                squares[x, y] = new Rook(copy.squares[x, y].Color);
+                                break;
+                            case "Backend.Knight":
+                                squares[x, y] = new Knight(copy.squares[x, y].Color);
+                                break;
+                            case "Backend.Bishop":
+                                squares[x, y] = new Bishop(copy.squares[x, y].Color);
+                                break;
+                            case "Backend.Queen":
+                                squares[x, y] = new Queen(copy.squares[x, y].Color);
+                                break;
+                            case "Backend.King":
+                                squares[x, y] = new King(copy.squares[x, y].Color);
+                                break;
+                            default:
+                                throw new ArgumentException();
+                        }
+                    }
+                }
+            }
+        }
 
         public void MovePiece(int initalX, int initalY, int endX, int endY)
         {
-            // Moves pieces. Overwrites any piece in the  destination
+            // Moves pieces. Overwrites any piece in the destination.
             ChessPiece temp = squares[initalX, initalY];
             squares[initalX, initalY] = null;
             squares[endX, endY] = temp;
@@ -51,8 +93,8 @@ namespace Backend
 
         public void DestroyBoard()
         {
-            // Method to remove all references to ChessPiece objects so that the garbage collector can clean them up
-            // Just in case it becomes a good idea to have this method
+            // Method to remove all references to ChessPiece objects so that the garbage collector can clean the chess pieces up
+            // For use in conjunction with the copy constructor
             for(int x = 0; x < 8; x++)
             {
                 for(int y = 0; y < 8; y++)
@@ -94,27 +136,346 @@ namespace Backend
 
         private int[,] GetValidPawnMoves(int x, int y)
         {
-            throw new NotImplementedException();
+            int[,] moves = new int[0,0];
+
+            int colorSwitch = 1;
+            if(squares[x, y].Color == TeamColor.WHITE)
+            {
+                colorSwitch = -colorSwitch; // Pawns only move in one direction. colorSwitch is flips to acomidate this
+            }
+
+            try
+            {
+                if (squares[x, y + colorSwitch] == null)
+                {
+                    ExpandAndAddCoordinates(moves, x, y + colorSwitch);
+
+                    if (colorSwitch == 1 && y == 6 || colorSwitch == -1 && y == 1)
+                    {
+                        ExpandAndAddCoordinates(moves, x, y + (colorSwitch * 2));
+                    }
+                }
+            }
+            catch { }
+            try // Capture cases
+            {
+                if (squares[x + 1, y + colorSwitch] != null)
+                {
+                    if (colorSwitch == 1 && squares[x + 1, y + colorSwitch].Color == TeamColor.WHITE ||
+                       colorSwitch == -1 && squares[x + 1, y + colorSwitch].Color == TeamColor.BLACK)
+                        ExpandAndAddCoordinates(moves, x + 1, y + colorSwitch);
+                }
+            }
+            catch { }
+            try
+            {
+                if (squares[x - 1, y + colorSwitch] != null)
+                {
+                    if (colorSwitch == 1 && squares[x - 1, y + colorSwitch].Color == TeamColor.WHITE ||
+                       colorSwitch == -1 && squares[x - 1, y + colorSwitch].Color == TeamColor.BLACK)
+                        ExpandAndAddCoordinates(moves, x - 1, y + colorSwitch);
+                }
+            }
+            catch { }
+
+            return moves;
         }
         private int[,] GetValidRookMoves(int x, int y)
         {
-            throw new NotImplementedException();
+            int[,] moves = new int[0, 0];
+            int tempX, tempY;
+
+            for(int i = 0; i < 4; i++)
+            {
+                tempX = x;
+                tempY = y;
+
+                try
+                {
+                    while (true)
+                    {
+                        switch (i) // Loop control
+                        {
+                            case 0:
+                                tempX++; // Look right
+                                break;
+                            case 1:
+                                tempX--; // Look left
+                                break;
+                            case 2:
+                                tempY++; // Look down
+                                break;
+                            case 3:
+                                tempY--; // Look up;
+                                break;
+                        }
+
+                        if (squares[tempX, tempY] == null) // Empty space;
+                        {
+                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                        }
+                        else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
+                        {
+                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            break;
+                        }
+                        else // Allied piece on checked space
+                        {
+                            break;
+                        }
+                    }
+                }
+                catch // Space does not exist on the board
+                {
+                    continue;
+                }
+            }
+
+            return moves;
         }
         private int[,] GetValidKnightMoves(int x, int y)
         {
-            throw new NotImplementedException();
+            int[,] moves = new int[0, 0];
+            int tempX, tempY;
+
+            for (int i = 0; i < 8; i++)
+            {
+                try
+                {
+                    switch (i) // Loop control
+                    {          // Each case is one of the 8 directions a knight can move
+                        case 0:
+                            tempX = x + 2;
+                            tempY = y + 1;
+                            break;
+                        case 1:
+                            tempX = x + 2;
+                            tempY = y - 1;
+                            break;
+                        case 2:
+                            tempX = x - 2;
+                            tempY = y + 1;
+                            break;
+                        case 3:
+                            tempX = x - 2;
+                            tempY = y - 1;
+                            break;
+                        case 4:
+                            tempX = x + 1;
+                            tempY = y + 2;
+                            break;
+                        case 5:
+                            tempX = x + 1;
+                            tempY = y - 2;
+                            break;
+                        case 6:
+                            tempX = x - 1;
+                            tempY = y + 2;
+                            break;
+                        case 7:
+                            tempX = x - 1;
+                            tempY = y - 2;
+                            break;
+                        default:
+                            throw new NotImplementedException(); // This line should never execute, but is here so that the if logic below doesn't yell at me
+                    }
+
+                    if (squares[tempX, tempY] == null) // Empty space;
+                    {
+                        ExpandAndAddCoordinates(moves, tempX, tempY);
+                    }
+                    else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
+                    {
+                        ExpandAndAddCoordinates(moves, tempX, tempY);
+                    }
+                }
+                catch { } // Space does not exist on the board
+            }
+
+            return moves;
         }
         private int[,] GetValidBishopMoves(int x, int y)
         {
-            throw new NotImplementedException();
+            int[,] moves = new int[0, 0];
+            int tempX, tempY;
+
+            for (int i = 0; i < 4; i++)
+            {
+                tempX = x;
+                tempY = y;
+
+                try
+                {
+                    while (true)
+                    {
+                        switch (i) // Loop control
+                        {
+                            case 0:
+                                tempX++; // Look down and to the right
+                                tempY++;
+                                break;
+                            case 1:
+                                tempX++; // Look up and to the right
+                                tempY--;
+                                break;
+                            case 2:
+                                tempX--; // Look down and to the left
+                                tempY++;
+                                break;
+                            case 3:
+                                tempX--; // Look up and to the left
+                                tempY--;
+                                break;
+                        }
+
+                        if (squares[tempX, tempY] == null) // Empty space;
+                        {
+                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                        }
+                        else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
+                        {
+                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            break;
+                        }
+                        else // Allied piece on checked space
+                        {
+                            break;
+                        }
+                    }
+                }
+                catch // Space does not exist on the board
+                {
+                    continue;
+                }
+            }
+
+            return moves;
         }
         private int[,] GetValidQueenMoves(int x, int y)
         {
-            throw new NotImplementedException();
+            int[,] moves = new int[0, 0];
+            int tempX, tempY;
+
+            for (int i = 0; i < 8; i++)
+            {
+                tempX = x;
+                tempY = y;
+
+                try
+                {
+                    while (true)
+                    {
+                        switch (i) // Loop control
+                        {
+                            case 0:
+                                tempX++; // Look right
+                                break;
+                            case 1:
+                                tempX--; // Look left
+                                break;
+                            case 2:
+                                tempY++; // Look down
+                                break;
+                            case 3:
+                                tempY--; // Look up;
+                                break;
+                            case 4:
+                                tempX++; // Look down and to the right
+                                tempY++;
+                                break;
+                            case 5:
+                                tempX++; // Look up and to the right
+                                tempY--;
+                                break;
+                            case 6:
+                                tempX--; // Look down and to the left
+                                tempY++;
+                                break;
+                            case 7:
+                                tempX--; // Look up and to the left
+                                tempY--;
+                                break;
+                        }
+
+                        if (squares[tempX, tempY] == null) // Empty space;
+                        {
+                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                        }
+                        else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
+                        {
+                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            break;
+                        }
+                        else // Allied piece on checked space
+                        {
+                            break;
+                        }
+                    }
+                }
+                catch // Space does not exist on the board
+                {
+                    continue;
+                }
+            }
+
+            return moves;
         }
         private int[,] GetValidKingMoves(int x, int y)
         {
-            throw new NotImplementedException();
+            int[,] moves = new int[0, 0];
+            int tempX, tempY;
+
+            for (int i = 0; i < 8; i++)
+            {
+                tempX = x;
+                tempY = y;
+
+                try
+                {
+                    switch (i) // Loop control
+                    {
+                        case 0:
+                            tempX++; // Look right
+                            break;
+                        case 1:
+                            tempX--; // Look left
+                            break;
+                        case 2:
+                            tempY++; // Look down
+                            break;
+                        case 3:
+                            tempY--; // Look up;
+                            break;
+                        case 4:
+                            tempX++; // Look down and to the right
+                            tempY++;
+                            break;
+                        case 5:
+                            tempX++; // Look up and to the right
+                            tempY--;
+                            break;
+                        case 6:
+                            tempX--; // Look down and to the left
+                            tempY++;
+                            break;
+                        case 7:
+                            tempX--; // Look up and to the left
+                            tempY--;
+                            break;
+                    }
+                    if (squares[tempX, tempY] == null) // Empty space;
+                    {
+                        ExpandAndAddCoordinates(moves, tempX, tempY);
+                    }
+                    else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
+                    {
+                        ExpandAndAddCoordinates(moves, tempX, tempY);
+                    }
+                }
+                catch { } // Space does not exist on the board
+            }
+
+            return moves;
         }
 
         private int[,] ExpandAndAddCoordinates(int[,] array, int insertX, int insertY)

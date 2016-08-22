@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.csproj", "{EC41E0BF-FF8D-4BA6-8E19-778C527A4FFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessWPF", "ChessWPF\ChessWPF.csproj", "{9FFA2007-4386-4FEF-851F-1C40D9546961}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EC41E0BF-FF8D-4BA6-8E19-778C527A4FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC41E0BF-FF8D-4BA6-8E19-778C527A4FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC41E0BF-FF8D-4BA6-8E19-778C527A4FFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FFA2007-4386-4FEF-851F-1C40D9546961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FFA2007-4386-4FEF-851F-1C40D9546961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FFA2007-4386-4FEF-851F-1C40D9546961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FFA2007-4386-4FEF-851F-1C40D9546961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
