@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Backend;
 
 namespace ChessWPF
 {
@@ -100,6 +101,60 @@ namespace ChessWPF
             squares[5, 7] = Square57;
             squares[6, 7] = Square67;
             squares[7, 7] = Square77;
+        }
+
+        public void UpdateBoard(Board board)
+        {
+            string mark = "";
+
+            for(int x = 0; x < 8; x++)
+            {
+                for(int y = 0; y < 8; y++)
+                {
+                    if(!mark.Equals(""))
+                    {
+                        mark = "";
+                    }
+
+                    if(board.squares[x,y] != null)
+                    {
+                        if(board.squares[x,y].Color == TeamColor.WHITE)
+                        {
+                            mark += "W";
+                        }
+                        else
+                        {
+                            mark += "B";
+                        }
+
+                        switch(board.squares[x, y].GetType().ToString())
+                        {
+                            case "Backend.Pawn":
+                                mark += "P";
+                                break;
+                            case "Backend.Rook":
+                                mark += "R";
+                                break;
+                            case "Backend.Knight":
+                                mark += "N";
+                                break;
+                            case "Backend.Bishop":
+                                mark += "B";
+                                break;
+                            case "Backend.Queen":
+                                mark += "Q";
+                                break;
+                            case "Backend.King":
+                                mark += "K";
+                                break;
+                            default:
+                                throw new ArgumentException();
+                        }
+                    }
+
+                    squares[x, y].Content = mark;
+                }
+            }
         }
     }
 }

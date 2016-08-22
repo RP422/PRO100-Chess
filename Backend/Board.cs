@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Backend
 {
-    class Board
+    public class Board
     {
+        public delegate void BoardUpdateDelegate(Board board);
+        public event BoardUpdateDelegate UpdateBoard;
         public ChessPiece[,] squares { get; private set; }
 
         public Board()
@@ -89,6 +91,11 @@ namespace Backend
             ChessPiece temp = squares[initalX, initalY];
             squares[initalX, initalY] = null;
             squares[endX, endY] = temp;
+        }
+
+        public void Update()
+        {
+            UpdateBoard.Invoke(this);
         }
 
         public void DestroyBoard()

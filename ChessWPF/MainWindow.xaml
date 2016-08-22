@@ -6,101 +6,101 @@
         xmlns:local="clr-namespace:ChessWPF"
         mc:Ignorable="d"
         Title="Chess" 
-        Height="400" 
-        Width="400"
+        Height="428" 
+        Width="406"
         ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Label Name="Square00" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square10" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square20" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square30" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square40" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square50" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square60" Grid.Column="6" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square70" Grid.Column="7" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
+        <Label Name="Square00" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="BR"/>
+        <Label Name="Square10" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="BN"/>
+        <Label Name="Square20" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="BB"/>
+        <Label Name="Square30" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="BK"/>
+        <Label Name="Square40" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="BQ"/>
+        <Label Name="Square50" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="BB"/>
+        <Label Name="Square60" Grid.Column="6" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="BN"/>
+        <Label Name="Square70" Grid.Column="7" Grid.Row="0" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="BR"/>
 
-        <Label Name="Square01" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square11" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square21" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square31" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square41" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square51" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square61" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square71" Grid.Column="7" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
+        <Label Name="Square01" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="BP"/>
+        <Label Name="Square11" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="BP"/>
+        <Label Name="Square21" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="BP"/>
+        <Label Name="Square31" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="BP"/>
+        <Label Name="Square41" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="BP"/>
+        <Label Name="Square51" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="BP"/>
+        <Label Name="Square61" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="BP"/>
+        <Label Name="Square71" Grid.Column="7" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="BP"/>
 
-        <Label Name="Square02" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square12" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square22" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square32" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square42" Grid.Column="4" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square52" Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square62" Grid.Column="6" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square72" Grid.Column="7" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
+        <Label Name="Square02" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square12" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square22" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square32" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square42" Grid.Column="4" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square52" Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square62" Grid.Column="6" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square72" Grid.Column="7" Grid.Row="2" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
 
-        <Label Name="Square03" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square13" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square23" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square33" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square43" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square53" Grid.Column="5" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square63" Grid.Column="6" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square73" Grid.Column="7" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
+        <Label Name="Square03" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square13" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square23" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square33" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square43" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square53" Grid.Column="5" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square63" Grid.Column="6" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square73" Grid.Column="7" Grid.Row="3" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
 
-        <Label Name="Square04" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square14" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square24" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square34" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square44" Grid.Column="4" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square54" Grid.Column="5" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square64" Grid.Column="6" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square74" Grid.Column="7" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
+        <Label Name="Square04" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square14" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square24" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square34" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square44" Grid.Column="4" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square54" Grid.Column="5" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square64" Grid.Column="6" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square74" Grid.Column="7" Grid.Row="4" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
 
-        <Label Name="Square05" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square15" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square25" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square35" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square45" Grid.Column="4" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square55" Grid.Column="5" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square65" Grid.Column="6" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square75" Grid.Column="7" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
+        <Label Name="Square05" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square15" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square25" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square35" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square45" Grid.Column="4" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square55" Grid.Column="5" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <Label Name="Square65" Grid.Column="6" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White"/>
+        <Label Name="Square75" Grid.Column="7" Grid.Row="5" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
 
-        <Label Name="Square06" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square16" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square26" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square36" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square46" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square56" Grid.Column="5" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square66" Grid.Column="6" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square76" Grid.Column="7" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
+        <Label Name="Square06" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="WP"/>
+        <Label Name="Square16" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="WP"/>
+        <Label Name="Square26" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="WP"/>
+        <Label Name="Square36" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="WP"/>
+        <Label Name="Square46" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="WP"/>
+        <Label Name="Square56" Grid.Column="5" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="WP"/>
+        <Label Name="Square66" Grid.Column="6" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="WP"/>
+        <Label Name="Square76" Grid.Column="7" Grid.Row="6" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="WP"/>
 
-        <Label Name="Square07" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square17" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square27" Grid.Column="2" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square37" Grid.Column="3" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square47" Grid.Column="4" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square57" Grid.Column="5" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
-        <Label Name="Square67" Grid.Column="6" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White"/>
-        <Label Name="Square77" Grid.Column="7" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center"/>
+        <Label Name="Square07" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="WR"/>
+        <Label Name="Square17" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="WN"/>
+        <Label Name="Square27" Grid.Column="2" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="WB"/>
+        <Label Name="Square37" Grid.Column="3" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="WQ"/>
+        <Label Name="Square47" Grid.Column="4" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="WK"/>
+        <Label Name="Square57" Grid.Column="5" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="WB"/>
+        <Label Name="Square67" Grid.Column="6" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Black" Foreground="White" Content="WN"/>
+        <Label Name="Square77" Grid.Column="7" Grid.Row="7" HorizontalAlignment="Center" Width="50" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="WR"/>
     </Grid>
 </Window>
