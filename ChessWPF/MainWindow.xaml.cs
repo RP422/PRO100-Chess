@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Backend;
 
 namespace ChessWPF
@@ -233,6 +222,17 @@ namespace ChessWPF
                     if (!tempBoard.Check(board.squares[x, y].Color))
                     {
                         board.MovePiece(storedX, storedY, x, y);
+
+                        if(currentColor == TeamColor.WHITE)
+                        {
+                            currentColor = TeamColor.BLACK;
+                        }
+                        else
+                        {
+                            currentColor = TeamColor.WHITE;
+                        }
+
+                        this.Title = currentColor.ToString() + " Turn!";
                     }
                     break;
                 }
