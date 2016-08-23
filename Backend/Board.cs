@@ -9,12 +9,7 @@ namespace Backend
     public class Board
     {
         public delegate void BoardDelegate(Board board);
-        public delegate void PieceMovementDelegate(int initalX, int initialY, int endX, int endY);
-        public delegate Boolean PieceExistanceDlegate(int x, int y);
-
         public event BoardDelegate UpdateBoard;
-        public event PieceMovementDelegate SelectAndMove;
-        public event PieceExistanceDlegate PieceExistsAt;
 
         public ChessPiece[,] squares { get; private set; }
 
@@ -51,7 +46,7 @@ namespace Backend
         public Board(Board copy)
         {
             // Copy constructor
-            // For use during check and checkmate methods
+            // For use alongside Check()
             squares = new ChessPiece[8, 8];
             String temp;
 
@@ -91,6 +86,21 @@ namespace Backend
             }
         }
 
+        public void DestroyBoard()
+        {
+            // Method to remove all references to ChessPiece objects so that the garbage collector can clean the chess pieces up
+            //     in case the lingering memory pointers stop collection
+
+            // For use in conjunction with the copy constructor
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+                    squares[x, y] = null;
+                }
+            }
+        }
+
         public void MovePiece(int initalX, int initalY, int endX, int endY)
         {
             // Moves pieces. Overwrites any piece in the destination.
@@ -98,25 +108,6 @@ namespace Backend
             squares[initalX, initalY] = null;
             squares[endX, endY] = temp;
         }
-
-        public void Update()
-        {
-            UpdateBoard.Invoke(this); // TODO: How exactly ami I going to call this in the code?
-        }
-
-        public void DestroyBoard()
-        {
-            // Method to remove all references to ChessPiece objects so that the garbage collector can clean the chess pieces up
-            // For use in conjunction with the copy constructor
-            for(int x = 0; x < 8; x++)
-            {
-                for(int y = 0; y < 8; y++)
-                {
-                    squares[x, y] = null;
-                }
-            }
-        }
-
         public int[,] GetValidMoves(int x, int y)
         {
             // Returns an array with the legal moves for the piece at (x, y)
@@ -146,7 +137,6 @@ namespace Backend
                     throw new ArgumentException();
             }
         }
-
         private int[,] GetValidPawnMoves(int x, int y)
         {
             int[,] moves = new int[0,0];
@@ -490,8 +480,7 @@ namespace Backend
 
             return moves;
         }
-
-        private int[,] ExpandAndAddCoordinates(int[,] array, int insertX, int insertY)
+        private int[,] ExpandAndAddCoordinates(int[,] array, int insertX, int insertY) // Helper method to deal with arrays
         {
             // Expands an array's size by one and adds (x, y) to the list
             int[,] temp = new int[array.GetLength(0) + 1, 2];
@@ -506,6 +495,20 @@ namespace Backend
             temp[array.GetLength(0), 1] = insertY;
 
             return temp;
+        }
+
+        public Boolean Check(TeamColor team)
+        {
+            throw new NotImplementedException();
+        }
+        public Boolean Checkmate(TeamColor team)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update()
+        {
+            UpdateBoard.Invoke(this); // TODO: How exactly ami I going to call this in the code?
         }
     }
 }

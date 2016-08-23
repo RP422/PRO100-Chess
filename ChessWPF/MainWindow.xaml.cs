@@ -17,15 +17,23 @@ using Backend;
 namespace ChessWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic forMainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        Label[,] squares = new Label[8, 8];
+        Button[,] squares = new Button[8, 8];
+        Board board;
+
+        int storedX = -1;
+        int storedY = -1;
+
+        TeamColor currentColor = TeamColor.WHITE;
+
         public MainWindow()
         {
             InitializeComponent();
             InitializeSquares();
+            board = new Board();
         }
 
         private void InitializeSquares()
@@ -113,12 +121,12 @@ namespace ChessWPF
                 {
                     if(!mark.Equals(""))
                     {
-                        mark = "";
+                        mark = ""; // Clear the mark
                     }
 
                     if(board.squares[x,y] != null)
                     {
-                        if(board.squares[x,y].Color == TeamColor.WHITE)
+                        if(board.squares[x,y].Color == TeamColor.WHITE) // Color forthe mark
                         {
                             mark += "W";
                         }
@@ -127,7 +135,7 @@ namespace ChessWPF
                             mark += "B";
                         }
 
-                        switch(board.squares[x, y].GetType().ToString())
+                        switch(board.squares[x, y].GetType().ToString()) // Type of piece forthe mark
                         {
                             case "Backend.Pawn":
                                 mark += "P";
@@ -151,12 +159,88 @@ namespace ChessWPF
                                 throw new ArgumentException();
                         }
                     }
-
                     squares[x, y].Content = mark;
                 }
             }
         }
 
-        public void SelectAndMove(int initalX, int initialY, int endX, int endY)
+        private void Square_Click(object sender, RoutedEventArgs e)
+        {
+            Button buttonSender = (Button)sender;
+
+            for(int x = 0; x < 8; x++)
+            {
+                for(int y = 0; y < 8; y++)
+                {
+                    if(buttonSender == squares[x,y])
+                    {
+                        ClickLogic(x, y);
+                    }
+                }
+            }
+        }
+        private void ClickLogic(int x, int y) // Branches logic for click events
+        {
+            if(storedX == x && storedY == y)
+            {
+                storedX = -1;
+                storedY = -1;
+            }
+            else if(board.squares[x, y] == null)
+            {
+                if(storedX != -1 && storedY != -1)
+                {
+                    moveLogic(x, y);
+                }
+            }
+            else
+            {
+                if(storedX != -1 && storedY != -1)
+                {
+                    if(board.squares[x, y].Color != currentColor)
+                    {
+                        moveLogic(x, y);
+                    }
+                    else
+                    {
+                        storedX = -1;
+                        storedY = -1;
+                    }
+                }
+                else
+                {
+                    if(board.squares[x, y].Color == currentColor)
+                    {
+                        storedX = x;
+                        storedY = y;
+                    }
+                }
+            }
+        }
+        private void moveLogic(int x, int y) // Handles movement
+        {
+            Board tempBoard;
+            int[,] possibleMoves;
+
+            tempBoard = new Board(board);
+            possibleMoves = board.GetValidMoves(storedX, storedY);
+
+            for(int i = 0; i < possibleMoves.Length; i++)
+            {
+                if(possibleMoves[i, 0] == x && possibleMoves[i, 1] == y)
+                {
+                    tempBoard.MovePiece(storedX, storedY, x, y);
+                    if (!tempBoard.Check(board.squares[x, y].Color))
+                    {
+                        board.MovePiece(storedX, storedY, x, y);
+                    }
+                    break;
+                }
+            }
+
+            tempBoard.DestroyBoard();
+            storedX = -1;
+            storedY = -1;
+        }
     }
 }
