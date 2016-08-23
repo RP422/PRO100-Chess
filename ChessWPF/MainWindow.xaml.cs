@@ -156,5 +156,7 @@ namespace ChessWPF
                 }
             }
         }
+
+        public void SelectAndMove(int initalX, int initialY, int endX, int endY)
     }
 }

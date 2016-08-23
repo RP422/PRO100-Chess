@@ -8,8 +8,14 @@ namespace Backend
 {
     public class Board
     {
-        public delegate void BoardUpdateDelegate(Board board);
-        public event BoardUpdateDelegate UpdateBoard;
+        public delegate void BoardDelegate(Board board);
+        public delegate void PieceMovementDelegate(int initalX, int initialY, int endX, int endY);
+        public delegate Boolean PieceExistanceDlegate(int x, int y);
+
+        public event BoardDelegate UpdateBoard;
+        public event PieceMovementDelegate SelectAndMove;
+        public event PieceExistanceDlegate PieceExistsAt;
+
         public ChessPiece[,] squares { get; private set; }
 
         public Board()
@@ -95,7 +101,7 @@ namespace Backend
 
         public void Update()
         {
-            UpdateBoard.Invoke(this);
+            UpdateBoard.Invoke(this); // TODO: How exactly ami I going to call this in the code?
         }
 
         public void DestroyBoard()
