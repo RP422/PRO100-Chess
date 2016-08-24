@@ -225,6 +225,17 @@ namespace ChessWPF
                         board.MovePiece(storedX, storedY, x, y);
                         UpdateBoard(board);
 
+                        if(board.squares[x,y].GetType().ToString().Equals("Backend.King"))
+                        {
+                            King tempKing = (King)board.squares[x, y];
+                            tempKing.hasMoved = true;
+                        }
+                        if (board.squares[x, y].GetType().ToString().Equals("Backend.Rook"))
+                        {
+                            Rook tempRook = (Rook)board.squares[x, y];
+                            tempRook.hasMoved = true;
+                        }
+
                         if (currentColor == TeamColor.WHITE)
                         {
                             if (board.Check(TeamColor.BLACK) && board.Checkmate(TeamColor.BLACK))
