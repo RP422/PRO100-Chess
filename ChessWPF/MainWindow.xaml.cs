@@ -104,18 +104,18 @@ namespace ChessWPF
         {
             string mark = "";
 
-            for(int x = 0; x < 8; x++)
+            for (int x = 0; x < 8; x++)
             {
-                for(int y = 0; y < 8; y++)
+                for (int y = 0; y < 8; y++)
                 {
-                    if(!mark.Equals(""))
+                    if (!mark.Equals(""))
                     {
                         mark = ""; // Clear the mark
                     }
 
-                    if(board.squares[x,y] != null)
+                    if (board.squares[x, y] != null)
                     {
-                        if(board.squares[x,y].Color == TeamColor.WHITE) // Color forthe mark
+                        if (board.squares[x, y].Color == TeamColor.WHITE) // Color forthe mark
                         {
                             mark += "W";
                         }
@@ -124,7 +124,7 @@ namespace ChessWPF
                             mark += "B";
                         }
 
-                        switch(board.squares[x, y].GetType().ToString()) // Type of piece forthe mark
+                        switch (board.squares[x, y].GetType().ToString()) // Type of piece forthe mark
                         {
                             case "Backend.Pawn":
                                 mark += "P";
@@ -157,11 +157,11 @@ namespace ChessWPF
         {
             Button buttonSender = (Button)sender;
 
-            for(int x = 0; x < 8; x++)
+            for (int x = 0; x < 8; x++)
             {
-                for(int y = 0; y < 8; y++)
+                for (int y = 0; y < 8; y++)
                 {
-                    if(buttonSender == squares[x,y])
+                    if (buttonSender == squares[x, y])
                     {
                         ClickLogic(x, y);
                         return;
@@ -171,23 +171,23 @@ namespace ChessWPF
         }
         private void ClickLogic(int x, int y) // Branches logic for click events
         {
-            if(storedX == x && storedY == y)
+            if (storedX == x && storedY == y)
             {
                 storedX = -1;
                 storedY = -1;
             }
-            else if(board.squares[x, y] == null)
+            else if (board.squares[x, y] == null)
             {
-                if(storedX != -1 && storedY != -1)
+                if (storedX != -1 && storedY != -1)
                 {
                     moveLogic(x, y);
                 }
             }
             else
             {
-                if(storedX != -1 && storedY != -1)
+                if (storedX != -1 && storedY != -1)
                 {
-                    if(board.squares[x, y].Color != currentColor)
+                    if (board.squares[x, y].Color != currentColor)
                     {
                         moveLogic(x, y);
                     }
@@ -199,7 +199,7 @@ namespace ChessWPF
                 }
                 else
                 {
-                    if(board.squares[x, y].Color == currentColor)
+                    if (board.squares[x, y].Color == currentColor)
                     {
                         storedX = x;
                         storedY = y;
@@ -215,9 +215,9 @@ namespace ChessWPF
             tempBoard = new Board(board);
             possibleMoves = board.GetValidMoves(storedX, storedY);
 
-            for(int i = 0; i < possibleMoves.GetLength(0); i++)
+            for (int i = 0; i < possibleMoves.GetLength(0); i++)
             {
-                if(possibleMoves[i, 0] == x && possibleMoves[i, 1] == y)
+                if (possibleMoves[i, 0] == x && possibleMoves[i, 1] == y)
                 {
                     tempBoard.MovePiece(storedX, storedY, x, y);
                     if (!tempBoard.Check(tempBoard.squares[x, y].Color))
@@ -225,15 +225,15 @@ namespace ChessWPF
                         board.MovePiece(storedX, storedY, x, y);
                         UpdateBoard(board);
 
-                        if(currentColor == TeamColor.WHITE)
+                        if (currentColor == TeamColor.WHITE)
                         {
-                            if(board.Check(TeamColor.BLACK) && board.Checkmate(TeamColor.BLACK))
+                            if (board.Check(TeamColor.BLACK) && board.Checkmate(TeamColor.BLACK))
                             {
                                 MessageBox.Show("WHITE wins!");
                                 Environment.Exit(0); // Enviroment.Exit closes the program. Game ends at checkmate, right?
                             }
                             currentColor = TeamColor.BLACK;
-                            
+
                         }
                         else
                         {
@@ -249,11 +249,60 @@ namespace ChessWPF
                     }
                     break;
                 }
-            }
+                else if (board.squares[storedX, storedY].GetType().ToString().Equals("Backend.King")) // Logic branch for Castling
+                {
+                    King tempKing = (King)board.squares[storedX, storedY];
+                    Rook tempRook;
 
-            tempBoard.DestroyBoard();
-            storedX = -1;
-            storedY = -1;
+                    if (!tempKing.hasMoved && y == storedY && Math.Abs(x - storedX) == 2)
+                    {
+                        int rookIndex = 0;
+                        int direction = -1;
+
+                        if (x > storedX)
+                        {
+                            rookIndex = 7;
+                            direction = 1;
+                        }
+
+                        if (board.squares[rookIndex, y].GetType().ToString().Equals("Backend.Rook"))
+                        {
+                            tempRook = (Rook)board.squares[rookIndex, y];
+                            if (!tempRook.hasMoved)
+                            {
+                                if (direction == -1 &&             // Scan for pieces blocking the way in the proper direction
+                                    board.squares[y, 1] == null &&
+                                    board.squares[y, 2] == null &&
+                                    board.squares[y, 3] == null ||
+                                    direction == 1 &&
+                                    board.squares[y, 5] == null &&
+                                    board.squares[y, 6] == null)
+                                {
+                                    if (!tempBoard.Check(board.squares[storedX, storedY].Color)) // The next 3 IF statements are for the rules that you cannot castle into, out of, or through check
+                                    {
+                                        tempBoard.MovePiece(storedX, y, storedX + direction, y);
+
+                                        if (!tempBoard.Check(board.squares[storedX + direction, storedY].Color))
+                                        {
+                                            tempBoard.MovePiece(storedX, y, storedX + (direction * 2), y);
+
+                                            if (!tempBoard.Check(board.squares[storedX + (direction * 2), storedY].Color))
+                                            {
+                                                board.MovePiece(storedX, storedY, x, y);                           // Congratulations, sucessful castle
+                                                board.MovePiece(rookIndex, storedY, storedX + direction, storedY);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                tempBoard.DestroyBoard();
+                storedX = -1;
+                storedY = -1;
+            }
         }
     }
 }
