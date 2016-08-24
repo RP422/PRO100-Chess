@@ -225,10 +225,21 @@ namespace ChessWPF
 
                         if(currentColor == TeamColor.WHITE)
                         {
+                            if(board.Checkmate(TeamColor.BLACK))
+                            {
+                                MessageBox.Show("WHITE wins!");
+                                Environment.Exit(0); // Enviroment.Exit closes the program. Game ends at checkmate, right?
+                            }
                             currentColor = TeamColor.BLACK;
+                            
                         }
                         else
                         {
+                            if (board.Checkmate(TeamColor.WHITE))
+                            {
+                                MessageBox.Show("BLACK wins!");
+                                Environment.Exit(0);
+                            }
                             currentColor = TeamColor.WHITE;
                         }
 
