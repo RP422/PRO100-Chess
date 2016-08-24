@@ -496,23 +496,13 @@ namespace Backend
                 {
                     if(squares[x,y].Color == team && squares[x,y].GetType().ToString().Equals("Backend.King"))
                     {
-                        if(CheckLineOfSightThreats(team, x, y).Length == 0) // Checks for Rooks, Bishops, and Queens
-                        {
-                            if(CheckKnightThreats(team, x, y).Length == 0) // Checks for those pesky Knights
-                            {
-                                if (CheckPawnThreats(team, x, y).Length == 0) // Hey, you never know!
-                                {
-                                    return false;
-                                }
-                            }
-                        }
-                        return true;
+                        return CheckLineOfSightThreats(x, y).Length == 0 || CheckKnightThreats(x, y).Length == 0 || CheckPawnThreats(x, y).Length == 0;
                     }
                 }
             }
             throw new MissingFieldException("I'm not sure how you pulled it off, but there isn't a king for " + team);
         }
-        private int[,] CheckLineOfSightThreats(TeamColor team, int x, int y)
+        private int[,] CheckLineOfSightThreats(int x, int y)
         {
             int[,] threats = new int[0, 0];
             int tempX, tempY;
@@ -598,7 +588,7 @@ namespace Backend
             }
             return threats;
         }
-        private int[,] CheckKnightThreats(TeamColor team, int x, int y)
+        private int[,] CheckKnightThreats(int x, int y)
         {
             int[,] threats = new int[0, 0];
             int tempX, tempY;
@@ -655,7 +645,7 @@ namespace Backend
             }
             return threats;
         }
-        private int[,] CheckPawnThreats(TeamColor team, int x, int y)
+        private int[,] CheckPawnThreats(int x, int y)
         {
             int[,] threats = new int[0, 0];
 
@@ -695,17 +685,7 @@ namespace Backend
                 {
                     if (squares[x, y].Color == team && squares[x, y].GetType().ToString().Equals("Backend.King"))
                     {
-                        if (!CheckmateMovementCheck(x, y))
-                        {
-                            if(!CheckmateBlockCheck(x, y))
-                            {
-                                if(!CheckmateCaptureCheck(x, y))
-                                {
-                                    return true;
-                                }
-                            }
-                        }
-                        return false;
+                        return !CheckmateMovementCheck(x, y) || !CheckmateCaptureCheck(x, y) || !CheckmateBlockCheck(x, y);
                     }
                 }
             }
@@ -728,15 +708,162 @@ namespace Backend
             }
             return true;
         }
-        private Boolean CheckmateBlockCheck(int x, int y)
-        {
-            throw new NotImplementedException();
-        }
         private Boolean CheckmateCaptureCheck(int x, int y)
         {
-            throw new NotImplementedException();
+            int[,] threats = CompileThreatList(x, y);
+            int[,] kingMoves = GetValidKingMoves(x, y);
+
+            if (threats.Length == 1)
+            {
+                for (int i = 0; i < kingMoves.Length; i++)
+                {
+                    if (threats[0, 0] == kingMoves[i, 0] && threats[0, 1] == kingMoves[i, 1])
+                    {
+                        return false;
+                    }
+                }
+
+                if (CompileThreatList(threats[0, 0], threats[0, 1]).Length > 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
-        private int[,] CompileThreatList(TeamColor team, int x, int y)
+        private Boolean CheckmateBlockCheck(int x, int y)
+        {
+            if(CheckKnightThreats(x, y).Length > 0)
+            {
+                return true;
+            }
+
+            int[,] openSpaces = CompileOpenSpaces(CompileThreatList(x, y), x, y);
+
+            return !PieceCanBlock(openSpaces, squares[x, y].Color);
+        }
+        private int[,] CompileOpenSpaces(int[,] threats, int x, int y)
+        {
+            int[,] openSpaces = new int[0, 2];
+
+            int tempX, tempY, xChange, yChange;
+
+            if (threats.Length == 1)
+            {
+                if (x == threats[0, 0])
+                {
+                    if (y > threats[0, 1])
+                    {
+                        for (int i = y; i != threats[0, 1]; i--)
+                        {
+                            ExpandAndAddCoordinates(openSpaces, x, i);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = y; i != threats[0, 1]; i++)
+                        {
+                            ExpandAndAddCoordinates(openSpaces, x, i);
+                        }
+                    }
+                }
+                else if (y == threats[0, 1])
+                {
+                    if (x > threats[0, 0])
+                    {
+                        for (int i = x; i != threats[0, 0]; i--)
+                        {
+                            ExpandAndAddCoordinates(openSpaces, i, x);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = x; i != threats[0, 0]; i++)
+                        {
+                            ExpandAndAddCoordinates(openSpaces, i, x);
+                        }
+                    }
+                }
+                else
+                {
+                    if(x > threats[0,0])
+                    {
+                        tempX = x--;
+                        xChange = -1;
+                    }
+                    else
+                    {
+                        tempX = x++;
+                        xChange = 1;
+                    }
+                    if (y > threats[0, 1])
+                    {
+                        tempY = y--;
+                        yChange = -1;
+                    }
+                    else
+                    {
+                        tempY = y++;
+                        yChange = 1;
+                    }
+
+                    while (x != threats[0, 0] && y != threats[0, 1])
+                    {
+                        ExpandAndAddCoordinates(openSpaces, tempX, tempY);
+                        tempX += xChange;
+                        tempY += yChange;
+                    }
+                }
+            }
+            return openSpaces;
+        }
+        private Boolean PieceCanBlock(int[,] openSpaces, TeamColor color)
+        {
+            int[,] temp;
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+                    if(squares[x,y] != null && squares[x,y].Color == color)
+                    {
+                        switch(squares[x,y].GetType().ToString())
+                        {
+                            case "Backend.Pawn":
+                                temp = GetValidPawnMoves(x, y);
+                                break;
+                            case "Backend.Rook":
+                                temp = GetValidRookMoves(x, y);
+                                break;
+                            case "Backend.Bishop":
+                                temp = GetValidBishopMoves(x, y);
+                                break;
+                            case "Backend.Knight":
+                                temp = GetValidKnightMoves(x, y);
+                                break;
+                            case "Backend.Queen":
+                                temp = GetValidQueenMoves(x, y);
+                                break;
+                            default:
+                                continue;
+                        }
+
+                        for(int i = 0; i < openSpaces.Length; i++)
+                        {
+                            for(int j = 0; j < temp.Length; j++)
+                            {
+                                if(openSpaces[i, 0] == temp[j, 0] && openSpaces[i, 1] == temp[j, 1])
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private int[,] CompileThreatList(int x, int y)
         {
             int[,] threats = new int[0, 2];
             for (int a = 0; a < 3; a++)
@@ -744,13 +871,13 @@ namespace Backend
                 switch (a)
                 {
                     case 0:
-                        threats = CheckLineOfSightThreats(team, x, y);
+                        threats = CheckLineOfSightThreats(x, y);
                         break;
                     case 1:
-                        threats = CheckKnightThreats(team, x, y);
+                        threats = CheckKnightThreats(x, y);
                         break;
                     case 2:
-                        threats = CheckPawnThreats(team, x, y);
+                        threats = CheckPawnThreats(x, y);
                         break;
                     default:
                         throw new NotImplementedException(); // See GetValidKnightMoves; Should never execute
