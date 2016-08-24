@@ -4,9 +4,6 @@ namespace Backend
 {
     public class Board
     {
-        public delegate void BoardDelegate(Board board);
-        public event BoardDelegate UpdateBoard;
-
         public ChessPiece[,] squares { get; private set; }
 
         public Board()
@@ -147,11 +144,11 @@ namespace Backend
             {
                 if (squares[x, y + colorSwitch] == null)
                 {
-                    ExpandAndAddCoordinates(moves, x, y + colorSwitch);
+                    moves = ExpandAndAddCoordinates(moves, x, y + colorSwitch);
 
-                    if (colorSwitch == 1 && y == 6 || colorSwitch == -1 && y == 1)
+                    if (colorSwitch == -1 && y == 6 || colorSwitch == 1 && y == 1)
                     {
-                        ExpandAndAddCoordinates(moves, x, y + (colorSwitch * 2));
+                        moves = ExpandAndAddCoordinates(moves, x, y + (colorSwitch * 2));
                     }
                 }
             }
@@ -163,7 +160,7 @@ namespace Backend
                     if (colorSwitch == 1 && squares[x + 1, y + colorSwitch].Color == TeamColor.WHITE ||
                        colorSwitch == -1 && squares[x + 1, y + colorSwitch].Color == TeamColor.BLACK)
                     {
-                        ExpandAndAddCoordinates(moves, x + 1, y + colorSwitch);
+                         moves = ExpandAndAddCoordinates(moves, x + 1, y + colorSwitch);
                     }
                 }
             }
@@ -175,7 +172,7 @@ namespace Backend
                     if (colorSwitch == 1 && squares[x - 1, y + colorSwitch].Color == TeamColor.WHITE ||
                        colorSwitch == -1 && squares[x - 1, y + colorSwitch].Color == TeamColor.BLACK)
                     {
-                        ExpandAndAddCoordinates(moves, x + 1, y + colorSwitch);
+                        moves = ExpandAndAddCoordinates(moves, x - 1, y + colorSwitch);
                     }
                 }
             }
@@ -215,11 +212,11 @@ namespace Backend
 
                         if (squares[tempX, tempY] == null) // Empty space;
                         {
-                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                         }
                         else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
                         {
-                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                             break;
                         }
                         else // Allied piece on checked space
@@ -282,11 +279,11 @@ namespace Backend
 
                     if (squares[tempX, tempY] == null) // Empty space;
                     {
-                        ExpandAndAddCoordinates(moves, tempX, tempY);
+                        moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                     }
                     else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
                     {
-                        ExpandAndAddCoordinates(moves, tempX, tempY);
+                        moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                     }
                 }
                 catch { } // Space does not exist on the board
@@ -330,11 +327,11 @@ namespace Backend
 
                         if (squares[tempX, tempY] == null) // Empty space;
                         {
-                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                         }
                         else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
                         {
-                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                             break;
                         }
                         else // Allied piece on checked space
@@ -396,11 +393,11 @@ namespace Backend
 
                         if (squares[tempX, tempY] == null) // Empty space;
                         {
-                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                         }
                         else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
                         {
-                            ExpandAndAddCoordinates(moves, tempX, tempY);
+                            moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                             break;
                         }
                         else // Allied piece on checked space
@@ -459,11 +456,11 @@ namespace Backend
                     }
                     if (squares[tempX, tempY] == null) // Empty space;
                     {
-                        ExpandAndAddCoordinates(moves, tempX, tempY);
+                        moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                     }
                     else if (squares[tempX, tempY].Color != squares[x, y].Color) // Capture enemy piece
                     {
-                        ExpandAndAddCoordinates(moves, tempX, tempY);
+                        moves = ExpandAndAddCoordinates(moves, tempX, tempY);
                     }
                 }
                 catch { } // Space does not exist on the board
@@ -494,9 +491,9 @@ namespace Backend
             {
                 for(int y = 0; y < 8; y++)
                 {
-                    if(squares[x,y].Color == team && squares[x,y].GetType().ToString().Equals("Backend.King"))
+                    if(squares[x,y] != null && squares[x,y].Color == team && squares[x,y].GetType().ToString().Equals("Backend.King"))
                     {
-                        return CheckLineOfSightThreats(x, y).Length == 0 || CheckKnightThreats(x, y).Length == 0 || CheckPawnThreats(x, y).Length == 0;
+                        return CheckLineOfSightThreats(x, y).GetLength(0) > 0 || CheckKnightThreats(x, y).GetLength(0) > 0 || CheckPawnThreats(x, y).GetLength(0) > 0;
                     }
                 }
             }
@@ -559,7 +556,7 @@ namespace Backend
                                     if(squares[tempX, tempY].GetType().ToString().Equals("Backend.Rook") ||
                                        squares[tempX, tempY].GetType().ToString().Equals("Backend.Queen"))
                                     {
-                                        ExpandAndAddCoordinates(threats, tempX, tempY);
+                                        threats = ExpandAndAddCoordinates(threats, tempX, tempY);
                                     }
                                     break;
                                 case 4: // Diagonal check; Looks for Bishops and queens
@@ -569,7 +566,7 @@ namespace Backend
                                     if (squares[tempX, tempY].GetType().ToString().Equals("Backend.Bishop") ||
                                        squares[tempX, tempY].GetType().ToString().Equals("Backend.Queen"))
                                     {
-                                        ExpandAndAddCoordinates(threats, tempX, tempY);
+                                        threats = ExpandAndAddCoordinates(threats, tempX, tempY);
                                     }
                                     break;
                             }
@@ -638,7 +635,7 @@ namespace Backend
                     if (squares[tempX, tempY].Color != squares[x, y].Color &&
                         squares[tempX, tempY].GetType().ToString().Equals("Backend.Knight")) // Enemy Knight on proper attack vector
                     {
-                        ExpandAndAddCoordinates(threats, tempX, tempY);
+                        threats = ExpandAndAddCoordinates(threats, tempX, tempY);
                     }
                 }
                 catch { } // Space does not exist on the board
@@ -657,19 +654,19 @@ namespace Backend
 
             try
             {
-                if (squares[x + 1, y + colorSwitch].Color != team &&
+                if (squares[x + 1, y + colorSwitch].Color != squares[x,y].Color &&
                     squares[x + 1, y + colorSwitch].GetType().ToString().Equals("Backend.Pawn"))
                 {
-                    ExpandAndAddCoordinates(threats, x + 1, y + colorSwitch);
+                    threats = ExpandAndAddCoordinates(threats, x + 1, y + colorSwitch);
                 }
             }
             catch { }
             try
             {
-                if (squares[x - 1, y + colorSwitch].Color != team &&
+                if (squares[x - 1, y + colorSwitch].Color != squares[x, y].Color &&
                     squares[x - 1, y + colorSwitch].GetType().ToString().Equals("Backend.Pawn"))
                 {
-                    ExpandAndAddCoordinates(threats, x + 1, y + colorSwitch);
+                    threats = ExpandAndAddCoordinates(threats, x + 1, y + colorSwitch);
                 }
             }
             catch { }
@@ -683,7 +680,7 @@ namespace Backend
             {
                 for (int y = 0; y < 8; y++)
                 {
-                    if (squares[x, y].Color == team && squares[x, y].GetType().ToString().Equals("Backend.King"))
+                    if (squares[x,y] != null && squares[x, y].Color == team && squares[x, y].GetType().ToString().Equals("Backend.King"))
                     {
                         return !CheckmateMovementCheck(x, y) || !CheckmateCaptureCheck(x, y) || !CheckmateBlockCheck(x, y);
                     }
@@ -696,7 +693,7 @@ namespace Backend
             int[,] moves = GetValidKingMoves(x, y);
             Board temp;
 
-            for(int i = 0; i < moves.Length; i++)
+            for(int i = 0; i < moves.GetLength(0); i++)
             {
                 temp = new Board(this);
                 temp.MovePiece(x, y, moves[i, 0], moves[i, 1]);
@@ -713,9 +710,9 @@ namespace Backend
             int[,] threats = CompileThreatList(x, y);
             int[,] kingMoves = GetValidKingMoves(x, y);
 
-            if (threats.Length == 1)
+            if (threats.GetLength(0) == 1)
             {
-                for (int i = 0; i < kingMoves.Length; i++)
+                for (int i = 0; i < kingMoves.GetLength(0); i++)
                 {
                     if (threats[0, 0] == kingMoves[i, 0] && threats[0, 1] == kingMoves[i, 1])
                     {
@@ -723,7 +720,7 @@ namespace Backend
                     }
                 }
 
-                if (CompileThreatList(threats[0, 0], threats[0, 1]).Length > 0)
+                if (CompileThreatList(threats[0, 0], threats[0, 1]).GetLength(0) > 0)
                 {
                     return false;
                 }
@@ -733,7 +730,7 @@ namespace Backend
         }
         private Boolean CheckmateBlockCheck(int x, int y)
         {
-            if(CheckKnightThreats(x, y).Length > 0)
+            if(CheckKnightThreats(x, y).GetLength(0) > 0)
             {
                 return true;
             }
@@ -748,7 +745,7 @@ namespace Backend
 
             int tempX, tempY, xChange, yChange;
 
-            if (threats.Length == 1)
+            if (threats.GetLength(0) == 1)
             {
                 if (x == threats[0, 0])
                 {
@@ -756,14 +753,14 @@ namespace Backend
                     {
                         for (int i = y; i != threats[0, 1]; i--)
                         {
-                            ExpandAndAddCoordinates(openSpaces, x, i);
+                            openSpaces = ExpandAndAddCoordinates(openSpaces, x, i);
                         }
                     }
                     else
                     {
                         for (int i = y; i != threats[0, 1]; i++)
                         {
-                            ExpandAndAddCoordinates(openSpaces, x, i);
+                            openSpaces = ExpandAndAddCoordinates(openSpaces, x, i);
                         }
                     }
                 }
@@ -773,14 +770,14 @@ namespace Backend
                     {
                         for (int i = x; i != threats[0, 0]; i--)
                         {
-                            ExpandAndAddCoordinates(openSpaces, i, x);
+                            openSpaces = ExpandAndAddCoordinates(openSpaces, i, x);
                         }
                     }
                     else
                     {
                         for (int i = x; i != threats[0, 0]; i++)
                         {
-                            ExpandAndAddCoordinates(openSpaces, i, x);
+                            openSpaces = ExpandAndAddCoordinates(openSpaces, i, x);
                         }
                     }
                 }
@@ -809,7 +806,7 @@ namespace Backend
 
                     while (x != threats[0, 0] && y != threats[0, 1])
                     {
-                        ExpandAndAddCoordinates(openSpaces, tempX, tempY);
+                        openSpaces = ExpandAndAddCoordinates(openSpaces, tempX, tempY);
                         tempX += xChange;
                         tempY += yChange;
                     }
@@ -847,9 +844,9 @@ namespace Backend
                                 continue;
                         }
 
-                        for(int i = 0; i < openSpaces.Length; i++)
+                        for(int i = 0; i < openSpaces.GetLength(0); i++)
                         {
-                            for(int j = 0; j < temp.Length; j++)
+                            for(int j = 0; j < temp.GetLength(0); j++)
                             {
                                 if(openSpaces[i, 0] == temp[j, 0] && openSpaces[i, 1] == temp[j, 1])
                                 {
@@ -883,17 +880,12 @@ namespace Backend
                         throw new NotImplementedException(); // See GetValidKnightMoves; Should never execute
                 }
 
-                for(int b = 0; b < threats.Length; b++)
+                for(int b = 0; b < threats.GetLength(0); b++)
                 {
-                    ExpandAndAddCoordinates(threats, threats[b, 0], threats[b, 1]);
+                    threats = ExpandAndAddCoordinates(threats, threats[b, 0], threats[b, 1]);
                 }
             }
             return threats;
-        }
-
-        public void Update()
-        {
-            UpdateBoard.Invoke(this); // TODO: How exactly ami I going to call this in the code?
         }
     }
 }

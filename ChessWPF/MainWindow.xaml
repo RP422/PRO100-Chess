@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ChessWPF"
         mc:Ignorable="d"
         Title="WHITE Turn!" 
-        Height="428" 
-        Width="406"
+        Height="438" 
+        Width="416"
         ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -34,8 +34,8 @@
         <Button Name="Square00" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Content="BR"/>
         <Button Name="Square10" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Background="Black" Foreground="White" Content="BN"/>
         <Button Name="Square20" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Content="BB"/>
-        <Button Name="Square30" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Background="Black" Foreground="White" Content="BK"/>
-        <Button Name="Square40" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Content="BQ"/>
+        <Button Name="Square30" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Background="Black" Foreground="White" Content="BQ"/>
+        <Button Name="Square40" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Content="BK"/>
         <Button Name="Square50" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Background="Black" Foreground="White" Content="BB"/>
         <Button Name="Square60" Grid.Column="6" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Content="BN"/>
         <Button Name="Square70" Grid.Column="7" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Click="Square_Click" Background="Black" Foreground="White" Content="BR"/>

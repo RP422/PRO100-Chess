@@ -164,6 +164,7 @@ namespace ChessWPF
                     if(buttonSender == squares[x,y])
                     {
                         ClickLogic(x, y);
+                        return;
                     }
                 }
             }
@@ -214,18 +215,19 @@ namespace ChessWPF
             tempBoard = new Board(board);
             possibleMoves = board.GetValidMoves(storedX, storedY);
 
-            for(int i = 0; i < possibleMoves.Length; i++)
+            for(int i = 0; i < possibleMoves.GetLength(0); i++)
             {
                 if(possibleMoves[i, 0] == x && possibleMoves[i, 1] == y)
                 {
                     tempBoard.MovePiece(storedX, storedY, x, y);
-                    if (!tempBoard.Check(board.squares[x, y].Color))
+                    if (!tempBoard.Check(tempBoard.squares[x, y].Color))
                     {
                         board.MovePiece(storedX, storedY, x, y);
+                        UpdateBoard(board);
 
                         if(currentColor == TeamColor.WHITE)
                         {
-                            if(board.Checkmate(TeamColor.BLACK))
+                            if(board.Check(TeamColor.BLACK) && board.Checkmate(TeamColor.BLACK))
                             {
                                 MessageBox.Show("WHITE wins!");
                                 Environment.Exit(0); // Enviroment.Exit closes the program. Game ends at checkmate, right?
@@ -235,7 +237,7 @@ namespace ChessWPF
                         }
                         else
                         {
-                            if (board.Checkmate(TeamColor.WHITE))
+                            if (board.Check(TeamColor.WHITE) && board.Checkmate(TeamColor.BLACK))
                             {
                                 MessageBox.Show("BLACK wins!");
                                 Environment.Exit(0);
