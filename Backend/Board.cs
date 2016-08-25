@@ -737,7 +737,11 @@ namespace Backend
 
             int[,] openSpaces = CompileOpenSpaces(CompileThreatList(x, y), x, y);
 
-            return !PieceCanBlock(openSpaces, squares[x, y].Color);
+            if(openSpaces.GetLength(0) == 1)
+            {
+                return !PieceCanBlock(openSpaces, squares[x, y].Color);
+            }
+            return true;
         }
         private int[,] CompileOpenSpaces(int[,] threats, int x, int y)
         {
@@ -745,71 +749,68 @@ namespace Backend
 
             int tempX, tempY, xChange, yChange;
 
-            if (threats.GetLength(0) == 1)
+            if (x == threats[0, 0])
             {
-                if (x == threats[0, 0])
+                if (y > threats[0, 1])
                 {
-                    if (y > threats[0, 1])
+                    for (int i = y; i != threats[0, 1]; i--)
                     {
-                        for (int i = y; i != threats[0, 1]; i--)
-                        {
-                            openSpaces = ExpandAndAddCoordinates(openSpaces, x, i);
-                        }
-                    }
-                    else
-                    {
-                        for (int i = y; i != threats[0, 1]; i++)
-                        {
-                            openSpaces = ExpandAndAddCoordinates(openSpaces, x, i);
-                        }
-                    }
-                }
-                else if (y == threats[0, 1])
-                {
-                    if (x > threats[0, 0])
-                    {
-                        for (int i = x; i != threats[0, 0]; i--)
-                        {
-                            openSpaces = ExpandAndAddCoordinates(openSpaces, i, x);
-                        }
-                    }
-                    else
-                    {
-                        for (int i = x; i != threats[0, 0]; i++)
-                        {
-                            openSpaces = ExpandAndAddCoordinates(openSpaces, i, x);
-                        }
+                        openSpaces = ExpandAndAddCoordinates(openSpaces, x, i);
                     }
                 }
                 else
                 {
-                    if(x > threats[0,0])
+                    for (int i = y; i != threats[0, 1]; i++)
                     {
-                        tempX = x--;
-                        xChange = -1;
+                        openSpaces = ExpandAndAddCoordinates(openSpaces, x, i);
                     }
-                    else
+                }
+            }
+            else if (y == threats[0, 1])
+            {
+                if (x > threats[0, 0])
+                {
+                    for (int i = x; i != threats[0, 0]; i--)
                     {
-                        tempX = x++;
-                        xChange = 1;
+                        openSpaces = ExpandAndAddCoordinates(openSpaces, i, x);
                     }
-                    if (y > threats[0, 1])
+                }
+                else
+                {
+                    for (int i = x; i != threats[0, 0]; i++)
                     {
-                        tempY = y--;
-                        yChange = -1;
+                        openSpaces = ExpandAndAddCoordinates(openSpaces, i, x);
                     }
-                    else
-                    {
-                        tempY = y++;
-                        yChange = 1;
-                    }
+                }
+            }
+            else
+            {
+                if (x > threats[0, 0])
+                {
+                    tempX = x--;
+                    xChange = -1;
+                }
+                else
+                {
+                    tempX = x++;
+                    xChange = 1;
+                }
+                if (y > threats[0, 1])
+                {
+                    tempY = y--;
+                    yChange = -1;
+                }
+                else
+                {
+                    tempY = y++;
+                    yChange = 1;
+                }
 
-                    while (x != threats[0, 0] && y != threats[0, 1])
-                    {
-                        openSpaces = ExpandAndAddCoordinates(openSpaces, tempX, tempY);
-                        tempX += xChange;
-                        tempY += yChange;
-                    }
+                while (x != threats[0, 0] && y != threats[0, 1])
+                {
+                    openSpaces = ExpandAndAddCoordinates(openSpaces, tempX, tempY);
+                    tempX += xChange;
+                    tempY += yChange;
                 }
             }
             return openSpaces;

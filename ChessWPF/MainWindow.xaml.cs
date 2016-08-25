@@ -217,7 +217,59 @@ namespace ChessWPF
 
             for (int i = 0; i < possibleMoves.GetLength(0); i++)
             {
-                if (possibleMoves[i, 0] == x && possibleMoves[i, 1] == y)
+                if (board.squares[storedX, storedY].GetType().ToString().Equals("Backend.King")) // Logic branch for Castling
+                {
+                    King tempKing = (King)board.squares[storedX, storedY];
+                    Rook tempRook;
+
+                    if (!tempKing.hasMoved && y == storedY && Math.Abs(x - storedX) == 2)
+                    {
+                        int rookIndex = 0;
+                        int direction = -1;
+
+                        if (x > storedX)
+                        {
+                            rookIndex = 7;
+                            direction = 1;
+                        }
+
+                        if (board.squares[rookIndex, y].GetType().ToString().Equals("Backend.Rook"))
+                        {
+                            tempRook = (Rook)board.squares[rookIndex, y];
+                            if (!tempRook.hasMoved)
+                            {
+                                if (direction == -1 &&             // Scan for pieces blocking the way in the proper direction
+                                    board.squares[y, 1] == null &&
+                                    board.squares[y, 2] == null &&
+                                    board.squares[y, 3] == null ||
+                                    direction == 1 &&
+                                    board.squares[y, 5] == null &&
+                                    board.squares[y, 6] == null)
+                                {
+                                    if (!tempBoard.Check(board.squares[storedX, storedY].Color)) // The next 3 IF statements are for the rules that you cannot castle into, out of, or through check
+                                    {
+                                        tempBoard.MovePiece(storedX, y, storedX + direction, y);
+
+                                        if (!tempBoard.Check(board.squares[storedX + direction, storedY].Color))
+                                        {
+                                            tempBoard.MovePiece(storedX, y, storedX + (direction * 2), y);
+
+                                            if (!tempBoard.Check(board.squares[storedX + (direction * 2), storedY].Color))
+                                            {
+                                                board.MovePiece(storedX, storedY, x, y);                           // Congratulations, sucessful castle
+                                                board.MovePiece(rookIndex, storedY, storedX + direction, storedY);
+                                                storedX = -1;
+                                                storedY = -1;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (possibleMoves[i, 0] == x && possibleMoves[i, 1] == y)
                 {
                     tempBoard.MovePiece(storedX, storedY, x, y);
                     if (!tempBoard.Check(tempBoard.squares[x, y].Color))
@@ -260,55 +312,7 @@ namespace ChessWPF
                     }
                     break;
                 }
-                else if (board.squares[storedX, storedY].GetType().ToString().Equals("Backend.King")) // Logic branch for Castling
-                {
-                    King tempKing = (King)board.squares[storedX, storedY];
-                    Rook tempRook;
-
-                    if (!tempKing.hasMoved && y == storedY && Math.Abs(x - storedX) == 2)
-                    {
-                        int rookIndex = 0;
-                        int direction = -1;
-
-                        if (x > storedX)
-                        {
-                            rookIndex = 7;
-                            direction = 1;
-                        }
-
-                        if (board.squares[rookIndex, y].GetType().ToString().Equals("Backend.Rook"))
-                        {
-                            tempRook = (Rook)board.squares[rookIndex, y];
-                            if (!tempRook.hasMoved)
-                            {
-                                if (direction == -1 &&             // Scan for pieces blocking the way in the proper direction
-                                    board.squares[y, 1] == null &&
-                                    board.squares[y, 2] == null &&
-                                    board.squares[y, 3] == null ||
-                                    direction == 1 &&
-                                    board.squares[y, 5] == null &&
-                                    board.squares[y, 6] == null)
-                                {
-                                    if (!tempBoard.Check(board.squares[storedX, storedY].Color)) // The next 3 IF statements are for the rules that you cannot castle into, out of, or through check
-                                    {
-                                        tempBoard.MovePiece(storedX, y, storedX + direction, y);
-
-                                        if (!tempBoard.Check(board.squares[storedX + direction, storedY].Color))
-                                        {
-                                            tempBoard.MovePiece(storedX, y, storedX + (direction * 2), y);
-
-                                            if (!tempBoard.Check(board.squares[storedX + (direction * 2), storedY].Color))
-                                            {
-                                                board.MovePiece(storedX, storedY, x, y);                           // Congratulations, sucessful castle
-                                                board.MovePiece(rookIndex, storedY, storedX + direction, storedY);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                
 
                 tempBoard.DestroyBoard();
                 storedX = -1;
