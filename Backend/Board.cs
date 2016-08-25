@@ -735,6 +735,11 @@ namespace Backend
                 return true;
             }
 
+            if(CompileThreatList(x, y).GetLength(0) > 1)
+            {
+                return false;
+            }
+
             int[,] openSpaces = CompileOpenSpaces(CompileThreatList(x, y), x, y);
 
             return !PieceCanBlock(openSpaces, squares[x, y].Color);

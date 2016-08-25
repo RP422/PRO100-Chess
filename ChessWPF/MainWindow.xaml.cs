@@ -209,45 +209,114 @@ namespace ChessWPF
         }
         private void moveLogic(int x, int y) // Handles movement
         {
-            Board tempBoard;
+            Board tempBoard = new Board(board);
             int[,] possibleMoves;
 
-            tempBoard = new Board(board);
-            possibleMoves = board.GetValidMoves(storedX, storedY);
+            int direction;
+            int rookCheckIndex;
 
-            for(int i = 0; i < possibleMoves.GetLength(0); i++)
+            if (board.squares[storedX,storedY].GetType().ToString().Equals("Backend.King") && storedY == y && Math.Abs(x - storedX) == 2)
             {
-                if(possibleMoves[i, 0] == x && possibleMoves[i, 1] == y)
+                King tempKing = (King)board.squares[storedX, storedY];
+                if (!tempKing.hasMoved)
                 {
-                    tempBoard.MovePiece(storedX, storedY, x, y);
-                    if (!tempBoard.Check(tempBoard.squares[x, y].Color))
+                    direction = 1;
+                    rookCheckIndex = 7;
+                    if (x < storedX)
                     {
-                        board.MovePiece(storedX, storedY, x, y);
-                        UpdateBoard(board);
-
-                        if(currentColor == TeamColor.WHITE)
-                        {
-                            if(board.Check(TeamColor.BLACK) && board.Checkmate(TeamColor.BLACK))
-                            {
-                                MessageBox.Show("WHITE wins!");
-                                Environment.Exit(0); // Enviroment.Exit closes the program. Game ends at checkmate, right?
-                            }
-                            currentColor = TeamColor.BLACK;
-                            
-                        }
-                        else
-                        {
-                            if (board.Check(TeamColor.WHITE) && board.Checkmate(TeamColor.BLACK))
-                            {
-                                MessageBox.Show("BLACK wins!");
-                                Environment.Exit(0);
-                            }
-                            currentColor = TeamColor.WHITE;
-                        }
-
-                        this.Title = currentColor.ToString() + " Turn!";
+                        direction = -1;
+                        rookCheckIndex = 0;
                     }
-                    break;
+
+                    if (board.squares[rookCheckIndex, y].GetType().ToString().Equals("Backend.Rook"))
+                    {
+                        Rook tempRook = (Rook)board.squares[rookCheckIndex, y];
+                        if(!tempRook.hasMoved)
+                        {
+                            if(direction == 1 &&
+                               board.squares[storedX + direction, y] == null && 
+                               board.squares[x,y] == null ||
+                               direction == -1 &&
+                               board.squares[storedX + direction, y] == null &&
+                               board.squares[storedX + (direction * 2), y] == null &&
+                               board.squares[x, y] == null)
+                            {
+                                tempBoard.MovePiece(storedX, y, storedX + direction, y);
+                                if(!tempBoard.Check(board.squares[storedX,storedY].Color))
+                                {
+                                    tempBoard.MovePiece(storedX + direction, y, x, y);
+                                    if (!tempBoard.Check(board.squares[storedX, storedY].Color))
+                                    {
+                                        board.MovePiece(storedX, y, x, y);
+                                        board.MovePiece(rookCheckIndex, y, storedX + direction, y);
+
+                                        UpdateBoard(board);
+
+                                        tempKing.hasMoved = true;
+                                        tempRook.hasMoved = true;
+
+                                        storedX = -1;
+                                        storedY = -1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                possibleMoves = board.GetValidMoves(storedX, storedY);
+
+                for (int i = 0; i < possibleMoves.GetLength(0); i++)
+                {
+                    if (possibleMoves[i, 0] == x && possibleMoves[i, 1] == y)
+                    {
+                        tempBoard.MovePiece(storedX, storedY, x, y);
+                        if (!tempBoard.Check(tempBoard.squares[x, y].Color))
+                        {
+                            board.MovePiece(storedX, storedY, x, y);
+                            UpdateBoard(board);
+
+                            if(board.squares[x, y].GetType().ToString().Equals("Backend.King"))
+                            {
+                                King tempKing = (King)board.squares[x, y];
+                                if (!tempKing.hasMoved)
+                                {
+                                    tempKing.hasMoved = true;
+                                }
+                            }
+                            else if (board.squares[x, y].GetType().ToString().Equals("Backend.Rook"))
+                            {
+                                Rook tempRook = (Rook)board.squares[x, y];
+                                if (!tempRook.hasMoved)
+                                {
+                                    tempRook.hasMoved = true;
+                                }
+                            }
+
+                            if (currentColor == TeamColor.WHITE)
+                            {
+                                if (board.Check(TeamColor.BLACK) && board.Checkmate(TeamColor.BLACK))
+                                {
+                                    MessageBox.Show("WHITE wins!");
+                                    Environment.Exit(0); // Enviroment.Exit closes the program. Game ends at checkmate, right?
+                                }
+                                currentColor = TeamColor.BLACK;
+                            }
+                            else
+                            {
+                                if (board.Check(TeamColor.WHITE) && board.Checkmate(TeamColor.BLACK))
+                                {
+                                    MessageBox.Show("BLACK wins!");
+                                    Environment.Exit(0);
+                                }
+                                currentColor = TeamColor.WHITE;
+                            }
+                            this.Title = currentColor.ToString() + " Turn!";
+                        }
+                        break;
+                    }
                 }
             }
 
